@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/m1guelsb/eshop-goapi/internal/entity"
 	"github.com/m1guelsb/eshop-goapi/internal/service"
 )
@@ -26,9 +27,9 @@ func (wch *WebCategoryHandler) GetCategories(w http.ResponseWriter, r *http.Requ
 }
 
 func (wch *WebCategoryHandler) GetCategoryByID(w http.ResponseWriter, r *http.Request) {
-	categoryID := r.URL.Query().Get("id")
+	categoryID := chi.URLParam(r, "id")
 	if categoryID == "" {
-		http.Error(w, "id is required", http.StatusBadRequest)
+		http.Error(w, "categoryID is required", http.StatusBadRequest)
 		return
 	}
 

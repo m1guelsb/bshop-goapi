@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/m1guelsb/eshop-goapi/internal/entity"
 	"github.com/m1guelsb/eshop-goapi/internal/service"
 )
@@ -26,7 +27,7 @@ func (wph *WebProductHandler) GetProducts(w http.ResponseWriter, r *http.Request
 }
 
 func (wph *WebProductHandler) GetProductByID(w http.ResponseWriter, r *http.Request) {
-	productID := r.URL.Query().Get("id")
+	productID := chi.URLParam(r, "id")
 	if productID == "" {
 		http.Error(w, "productID is required", http.StatusBadRequest)
 		return
@@ -41,7 +42,8 @@ func (wph *WebProductHandler) GetProductByID(w http.ResponseWriter, r *http.Requ
 }
 
 func (wph *WebProductHandler) GetProductByCategoryID(w http.ResponseWriter, r *http.Request) {
-	categoryID := r.URL.Query().Get("id")
+	categoryID := chi.URLParam(r, "id")
+
 	if categoryID == "" {
 		http.Error(w, "categoryID is required", http.StatusBadRequest)
 		return
